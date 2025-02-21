@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "cleber-tracker": "file:",
     "core-js": "^3.8.3",
     "vue": "^3.2.13"
   },
@@ -19,8 +21,13 @@
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "autoprefixer": "^10.4.19",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "postcss": "^8.4.38",
+    "sass": "^1.85.0",
+    "sass-loader": "^16.0.5",
+    "tailwindcss": "^3.4.4",
     "typescript": "~4.5.5"
   }
 }
