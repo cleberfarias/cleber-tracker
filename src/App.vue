@@ -88,10 +88,9 @@ export default defineComponent({
 
         console.log("✅ Tarefa excluída com sucesso");
 
-        // 🔹 Remove a tarefa da lista no frontend corretamente
+        
         this.tarefas = this.tarefas.filter(tarefa => String(tarefa.id) !== formattedId);
 
-        // 🔹 Força a reatividade do Vue para atualizar a interface
         this.tarefas = [...this.tarefas];
 
       } catch (error) {
