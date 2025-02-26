@@ -11,7 +11,7 @@ O CLEBER TRACKER é um projeto desenvolvido com Vue 3, TypeScript e TailwindCSS,
 - ESLint e Prettier
 - Python
 - FastAPI
-- Banco de Dados (ex: PostgreSQL, MySQL)
+- Banco de Dados Mongodb Atlas
 
 ### INSTALAÇÃO E EXECUÇÃO
 
