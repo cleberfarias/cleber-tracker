@@ -8,6 +8,17 @@
             <!-- Conteúdo da coluna da direita -->
             <CronometroComponent :tempoEmSegundos="tarefa.duracacaoEmSegundos" />
         </div>
+        <div class="tw-p-4">
+          <button @click="editarTarefa" >
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </div>
+
+        <div class="tw-p-4">
+            <button @click="deletarTarefa">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
 
     </BoxComponent>
 </template>
@@ -45,6 +56,20 @@ export default defineComponent({
                     this.tempoEmSegundos++;
                 }, 1000);
             }
+        },
+        editarTarefa() {
+            const novaDescricao = prompt("Editar tarefa:", this.tarefa.descricao);
+            if(novaDescricao !== null) {
+                this.$emit('editarTarefa', {id: this.tarefa.id, descricao: novaDescricao});
+            }
+            console.log('Editar tarefa');
+        },
+        deletarTarefa() {
+            if (confirm("Deseja realmente deletar a tarefa?")) {
+                console.log("🗑 Chamando deletarTarefa no componente filho, ID:", this.tarefa.id);
+                this.$emit('aoExcluirTarefa', this.tarefa.id);
+            }
+        
         },
         pararTarefa() {
             if (this.cronometroRodando) {
