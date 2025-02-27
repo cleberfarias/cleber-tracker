@@ -4,6 +4,6 @@ export default interface ITarefas {
        // Define uma propriedade descricao do tipo string
     descricao: string;
 
-     // Define uma propriedade duracacaoEmSegundos do tipo número
-     duracacaoEmSegundos: number;
+     // Define uma propriedade duracaoEmSegundos do tipo número
+    duracaoEmSegundos: number;
 }

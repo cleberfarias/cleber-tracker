@@ -6,7 +6,7 @@
         </div>
         <div class="tw-flex tw-flex-col tw-w-1/2 tw-pl-2">
             <!-- Conteúdo da coluna da direita -->
-            <CronometroComponent :tempoEmSegundos="tarefa.duracacaoEmSegundos" />
+            <CronometroComponent :tempoEmSegundos="tarefa.duracaoEmSegundos" />
         </div>
         <div class="tw-p-4">
           <button @click="editarTarefa" >

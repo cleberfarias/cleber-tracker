@@ -54,8 +54,8 @@ export default defineComponent({
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            description: tarefaAtualizada.descricao,
-            
+            descricao: tarefaAtualizada.descricao,
+
           })
         });
 
@@ -88,10 +88,9 @@ export default defineComponent({
 
         console.log("✅ Tarefa excluída com sucesso");
 
-        // 🔹 Remove a tarefa da lista no frontend corretamente
+
         this.tarefas = this.tarefas.filter(tarefa => String(tarefa.id) !== formattedId);
 
-        // 🔹 Força a reatividade do Vue para atualizar a interface
         this.tarefas = [...this.tarefas];
 
       } catch (error) {
@@ -101,8 +100,8 @@ export default defineComponent({
 
     salvarTarefa(tarefa: ITarefas) {
       const taskPayload = {
-        description: tarefa.descricao,
-        duration_in_seconds: tarefa.duracacaoEmSegundos
+        descricao: tarefa.descricao,
+        duracaoEmSegundos: tarefa.duracaoEmSegundos // Corrigido o nome do campo
       };
 
       fetch('http://127.0.0.1:8000/tasks', {
@@ -125,8 +124,8 @@ export default defineComponent({
 
           const tarefaFormatada: ITarefas = {
             id: data.id,
-            descricao: data.description,
-            duracacaoEmSegundos: data.duration_in_seconds
+            descricao: data.descricao,
+            duracaoEmSegundos: data.duracaoEmSegundos // Mantendo a consistência
           };
 
           this.tarefas.push(tarefaFormatada);
@@ -145,8 +144,8 @@ export default defineComponent({
 
         this.tarefas = data.map((tarefa: any) => ({
           id: tarefa.id,
-          descricao: tarefa.description,
-          duracacaoEmSegundos: tarefa.duration_in_seconds
+          descricao: tarefa.descricao,
+          duracaoEmSegundos: tarefa.duracaoEmSegundos
         }));
 
       } catch (error) {
