@@ -88,7 +88,6 @@ export default defineComponent({
 
         console.log("✅ Tarefa excluída com sucesso");
 
-
         this.tarefas = this.tarefas.filter(tarefa => String(tarefa.id) !== formattedId);
 
         this.tarefas = [...this.tarefas];
