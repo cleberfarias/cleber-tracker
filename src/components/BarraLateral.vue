@@ -9,15 +9,19 @@
             class="tw-text-white tw-border-color-white tw-bg-blue-500 tw-rounded-full tw-p-2 tw-mt-4 tw-w-full tw-text-center tw-font-bold tw-transition-all tw-shadow-md hover:tw-bg-blue-600">
             {{ textoBotao }}
         </button>
-
+        <PomodoroComponent />  
     </aside>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import PomodoroComponent from './Pomodoro.vue';
 
 export default defineComponent({
     name: 'BarraLateral',
+    components: {
+        PomodoroComponent
+    },
     emits: ['darkModeToggled'],
     data() {
         return {
