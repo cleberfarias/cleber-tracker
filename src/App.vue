@@ -25,6 +25,9 @@ import TarefaComponent from './components/Tarefa.vue';
 import ITarefas from './interfaces/ITarefas';
 import BoxComponent from './components/Box.vue';
 
+
+const API_BASE_URL = "https://api-tracker-cleber.onrender.com";
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -36,9 +39,8 @@ export default defineComponent({
   data() {
     return {
       tarefas: [] as ITarefas[],
-
       isDarkMode: false
-    }
+    };
   },
 
   computed: {
@@ -46,16 +48,15 @@ export default defineComponent({
       return this.tarefas.length === 0;
     }
   },
+
   methods: {
     async atualizarTarefa(tarefaAtualizada: ITarefas) {
       try {
-
-        const response = await fetch(`http://127.0.0.1:8000/tasks/${tarefaAtualizada.id}`, {
+        const response = await fetch(`${API_BASE_URL}/tasks/${tarefaAtualizada.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             descricao: tarefaAtualizada.descricao,
-
           })
         });
 
@@ -73,10 +74,9 @@ export default defineComponent({
       try {
         console.log("🔴 Enviando solicitação DELETE para ID:", taskId);
 
-        // 🔹 Remove chaves `{}` caso estejam presentes no ID
         const formattedId = taskId.replace(/[{}]/g, "");
 
-        const response = await fetch(`http://127.0.0.1:8000/tasks/${formattedId}`, {
+        const response = await fetch(`${API_BASE_URL}/tasks/${formattedId}`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -89,9 +89,6 @@ export default defineComponent({
         console.log("✅ Tarefa excluída com sucesso");
 
         this.tarefas = this.tarefas.filter(tarefa => String(tarefa.id) !== formattedId);
-
-        this.tarefas = [...this.tarefas];
-
       } catch (error) {
         console.error("❌ Erro ao excluir tarefa:", error);
       }
@@ -100,14 +97,12 @@ export default defineComponent({
     salvarTarefa(tarefa: ITarefas) {
       const taskPayload = {
         descricao: tarefa.descricao,
-        duracaoEmSegundos: tarefa.duracaoEmSegundos // Corrigido o nome do campo
+        duracaoEmSegundos: tarefa.duracaoEmSegundos
       };
 
-      fetch('http://127.0.0.1:8000/tasks', {
+      fetch(`${API_BASE_URL}/tasks`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(taskPayload)
       })
         .then(response => {
@@ -124,7 +119,7 @@ export default defineComponent({
           const tarefaFormatada: ITarefas = {
             id: data.id,
             descricao: data.descricao,
-            duracaoEmSegundos: data.duracaoEmSegundos // Mantendo a consistência
+            duracaoEmSegundos: data.duracaoEmSegundos
           };
 
           this.tarefas.push(tarefaFormatada);
@@ -136,9 +131,10 @@ export default defineComponent({
 
     async fetchTarefas() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/tasks');
+        const response = await fetch(`${API_BASE_URL}/tasks`);
+        if (!response.ok) throw new Error('Erro ao buscar tarefas');
+        
         const data = await response.json();
-
         console.log("🚀 Dados recebidos do backend:", data);
 
         this.tarefas = data.map((tarefa: any) => ({
@@ -146,7 +142,6 @@ export default defineComponent({
           descricao: tarefa.descricao,
           duracaoEmSegundos: tarefa.duracaoEmSegundos
         }));
-
       } catch (error) {
         console.error('❌ Erro ao buscar tarefas:', error);
       }
@@ -159,8 +154,9 @@ export default defineComponent({
       } else {
         document.documentElement.classList.remove('tw-dark-theme');
       }
-    },
+    }
   },
+
   mounted() {
     console.log("🔄 Chamando fetchTarefas() ao montar o componente...");
     this.fetchTarefas();
