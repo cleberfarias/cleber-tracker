@@ -4,16 +4,16 @@
 
         <!-- Exibição do Tempo -->
         <div class="tw-relative tw-mb-4">
-            <div class="tw-mx-auto tw-w-40 tw-h-40 tw-rounded-full tw-flex tw-items-center tw-justify-center" :style="{
+            <div class="tw-mx-auto tw-w-40 tw-h-40 tw-rounded-full tw-flex tw-items-center tw-justify-center sm:tw-w-32 sm:tw-h-32" :style="{
                 background: `conic-gradient(
               ${mode === 'work' ? '#ef4444' : '#3b82f6'} ${calculateProgress()}%, 
               transparent ${calculateProgress()}% 100%
             )`
             }">
                 <div
-                    class="tw-bg-[#0d3b66] dark:tw-bg-[#333] tw-w-36 tw-h-36 tw-rounded-full tw-flex tw-flex-col tw-items-center tw-justify-center">
-                    <div class="tw-text-2xl tw-font-bold tw-text-white">{{ formatTime(timeLeft) }}</div>
-                    <div class="tw-text-xs tw-text-white tw-opacity-80 tw-capitalize">
+                    class="tw-bg-[#0d3b66] dark:tw-bg-[#333] tw-w-36 tw-h-36 tw-rounded-full tw-flex tw-flex-col tw-items-center tw-justify-center sm:tw-w-28 sm:tw-h-28">
+                    <div class="tw-text-2xl tw-font-bold tw-text-white sm:tw-text-xl">{{ formatTime(timeLeft) }}</div>
+                    <div class="tw-text-xs tw-text-white tw-opacity-80 tw-capitalize sm:tw-text-xxs">
                         {{ mode === 'work' ? '' : 'pausa' }} {{ isActive ? 'em andamento' : 'pausado' }}
                     </div>
                 </div>
@@ -23,11 +23,11 @@
         <!-- Controles -->
         <div class="tw-flex tw-justify-center tw-gap-2 tw-mb-4">
             <button @click="isActive ? pauseTimer() : startTimer()"
-                class="tw-px-3 tw-py-1 tw-bg-blue-500 tw-text-white tw-rounded tw-text-sm hover:tw-bg-blue-600 tw-transition">
+                class="tw-px-3 tw-py-1 tw-bg-blue-500 tw-text-white tw-rounded tw-text-sm hover:tw-bg-blue-600 tw-transition sm:tw-px-2 sm:tw-py-0.5 sm:tw-text-xs">
                 {{ isActive ? 'Pausar' : 'Iniciar' }}
             </button>
             <button @click="resetTimer"
-                class="tw-px-3 tw-py-1 tw-bg-gray-500 tw-text-white tw-rounded tw-text-sm hover:tw-bg-gray-600 tw-transition">
+                class="tw-px-3 tw-py-1 tw-bg-gray-500 tw-text-white tw-rounded tw-text-sm hover:tw-bg-gray-600 tw-transition sm:tw-px-2 sm:tw-py-0.5 sm:tw-text-xs">
                 Resetar
             </button>
         </div>
@@ -56,24 +56,18 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount, watch } from 'vue';
 
-
-
 export default defineComponent({
     name: 'PomodoroComponent',
     setup() {
-      
         const mode = ref<"work" | "break">("work");
         const isActive = ref(false);
         const timeLeft = ref(25 * 60);
 
-        
         const workDuration = ref(25);
         const breakDuration = ref(5);
 
-        
         let interval: number | null = null;
 
-        
         const speak = (text: string) => {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
@@ -84,27 +78,23 @@ export default defineComponent({
             }
         };
 
-        
         onBeforeUnmount(() => {
             if (interval) {
                 clearInterval(interval);
             }
         });
 
-        
         const formatTime = (seconds: number): string => {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
             return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
         };
 
-        
         const calculateProgress = (): number => {
             const totalSeconds = mode.value === "work" ? workDuration.value * 60 : breakDuration.value * 60;
             return ((totalSeconds - timeLeft.value) / totalSeconds) * 100;
         };
 
-        
         const startTimer = () => {
             isActive.value = true;
 
@@ -114,7 +104,6 @@ export default defineComponent({
                 if (timeLeft.value > 0) {
                     timeLeft.value--;
                 } else {
-                    
                     if (mode.value === "work") {
                         mode.value = "break";
                         timeLeft.value = breakDuration.value * 60;
@@ -141,7 +130,6 @@ export default defineComponent({
             timeLeft.value = mode.value === "work" ? workDuration.value * 60 : breakDuration.value * 60;
         };
 
-        
         const handleWorkDurationChange = (event: Event) => {
             const newDuration = parseInt((event.target as HTMLInputElement).value);
             workDuration.value = newDuration;
@@ -158,7 +146,6 @@ export default defineComponent({
             }
         };
 
-        
         watch(mode, (newMode) => {
             if (!isActive.value) {
                 timeLeft.value = newMode === "work" ? workDuration.value * 60 : breakDuration.value * 60;
@@ -181,5 +168,4 @@ export default defineComponent({
         };
     }
 });
-
 </script>

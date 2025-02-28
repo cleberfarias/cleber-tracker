@@ -1,29 +1,33 @@
 <template>
-    <div class="tw-flex tw-items-center tw-gap-3 tw-ml-4 tw-p-4 tw-rounded-md tw-shadow-md tw-w-full sm:tw-w-auto dark:tw-bg-[#333] dark:tw-text-white">
+    <div class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-gap-3 tw-ml-4 tw-p-4 tw-rounded-md tw-shadow-md tw-w-full sm:tw-w-auto dark:tw-bg-[#333] dark:tw-text-white">
         <CronometroComponent :tempoEmSegundos="tempoEmSegundos" />
-        <BotaoComponent class="tw-bg-blue-500 hover:tw-bg-blue-600" 
-        @clicado="iniciarTarefa" 
-        :desabilitado="cronometroRodando" 
-        icone="fas fa-play" 
-        texto="Iniciar" />
-        <BotaoComponent class="tw-bg-red-500 hover:tw-bg-red-600 disabled:tw-opacity-50" 
-        @clicado="pararTarefa" 
-        :desabilitado="!cronometroRodando" 
-        icone="fas fa-stop" 
-        texto="Parar" />
-        <BotaoComponent class="tw-bg-gray-500 hover:tw-bg-gray-600 disabled:tw-opacity-50" 
-        @clicado="resetarTarefa"
-        icone="fas fa-redo" 
-        texto="Resetar" />
-        <select v-model="modoContagem" class="tw-bg-white tw-text-black tw-px-2 tw-rounded dark:tw-bg-[#333] dark:tw-text-white">
-            <option value="progressivo">Progressivo</option>
-            <option value="regressivo">Regressivo</option>
-        </select>
-        <input v-if="modoContagem !== 'livre'"
-             type="number"
-             v-model="tempoEmSegundos"
-             class="tw-p-2 tw-border tw-rounded tw-w-16 tw-text-black dark:tw-bg-[#333] dark:tw-text-white"
-             placeholder="Segundos" />
+        <div class="tw-flex tw-gap-2 tw-flex-wrap">
+            <BotaoComponent class="tw-bg-blue-500 hover:tw-bg-blue-600" 
+            @clicado="iniciarTarefa" 
+            :desabilitado="cronometroRodando" 
+            icone="fas fa-play" 
+            texto="Iniciar" />
+            <BotaoComponent class="tw-bg-red-500 hover:tw-bg-red-600 disabled:tw-opacity-50" 
+            @clicado="pararTarefa" 
+            :desabilitado="!cronometroRodando" 
+            icone="fas fa-stop" 
+            texto="Parar" />
+            <BotaoComponent class="tw-bg-gray-500 hover:tw-bg-gray-600 disabled:tw-opacity-50" 
+            @clicado="resetarTarefa"
+            icone="fas fa-redo" 
+            texto="Resetar" />
+        </div>
+        <div class="tw-flex tw-gap-2 tw-flex-wrap tw-mt-2 sm:tw-mt-0">
+            <select v-model="modoContagem" class="tw-bg-white tw-text-black tw-px-2 tw-rounded dark:tw-bg-[#333] dark:tw-text-white">
+                <option value="progressivo">Progressivo</option>
+                <option value="regressivo">Regressivo</option>
+            </select>
+            <input v-if="modoContagem !== 'livre'"
+                type="number"
+                v-model="tempoEmSegundos"
+                class="tw-p-2 tw-border tw-rounded tw-w-16 tw-text-black dark:tw-bg-[#333] dark:tw-text-white"
+                placeholder="Segundos" />
+        </div>
     </div>
 </template>
 

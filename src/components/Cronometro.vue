@@ -1,6 +1,6 @@
 <template>
-    <section>
-        <strong class="tw-text-xl tw-ml-4 dark:tw-text-white">
+    <section class="tw-p-2 sm:tw-p-4">
+        <strong class="tw-text-lg sm:tw-text-xl tw-ml-2 sm:tw-ml-4 dark:tw-text-white">
             {{ tempoFormatado }}
         </strong>
     </section>

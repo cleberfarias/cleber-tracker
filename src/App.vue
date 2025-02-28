@@ -1,12 +1,15 @@
 <template>
   <!-- Define o layout principal da aplicação -->
-  <main class="tw-flex tw-min-h-screen tw-bg-white dark:tw-bg-[#262626]" :class="{ 'tw-dark-theme': isDarkMode }">
-    <BarraLateral @darkModeToggled="trocarTema" />
+  <main class="tw-flex tw-flex-col md:tw-flex-row tw-min-h-screen tw-bg-white dark:tw-bg-[#262626]" :class="{ 'tw-dark-theme': isDarkMode }">
+    <button @click="toggleSidebar" class="md:tw-hidden tw-p-4 tw-bg-blue-500 tw-text-white tw-fixed tw-top-0 tw-left-0">
+      Menu
+    </button>
+    <BarraLateral v-if="isSidebarVisible" @darkModeToggled="trocarTema" class="tw-fixed md:tw-static tw-z-50" />
     <!-- Conteúdo Principal -->
-    <div class="tw-flex-1 tw-ml-64 tw-p-6 tw-min-h-screen">
+    <div :class="{'tw-ml-0': !isSidebarVisible, 'md:tw-ml-64': isSidebarVisible}" class="tw-flex-1 tw-p-6 tw-min-h-screen">
       <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
       <!-- Lista de tarefas -->
-      <div class="tw-flex tw-flex-col tw-gap-4 tw-mt-4  ">
+      <div class="tw-flex tw-flex-col tw-gap-4 tw-mt-4">
         <TarefaComponent v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" @editarTarefa="atualizarTarefa"
           @aoExcluirTarefa="deletarTarefa" />
         <BoxComponent v-if="listaEstaVazia">
@@ -25,7 +28,6 @@ import TarefaComponent from './components/Tarefa.vue';
 import ITarefas from './interfaces/ITarefas';
 import BoxComponent from './components/Box.vue';
 
-
 const API_BASE_URL = "https://api-tracker-cleber.onrender.com";
 
 export default defineComponent({
@@ -39,7 +41,8 @@ export default defineComponent({
   data() {
     return {
       tarefas: [] as ITarefas[],
-      isDarkMode: false
+      isDarkMode: false,
+      isSidebarVisible: false
     };
   },
 
@@ -50,6 +53,10 @@ export default defineComponent({
   },
 
   methods: {
+    toggleSidebar() {
+      this.isSidebarVisible = !this.isSidebarVisible;
+    },
+
     async atualizarTarefa(tarefaAtualizada: ITarefas) {
       try {
         const response = await fetch(`${API_BASE_URL}/tasks/${tarefaAtualizada.id}`, {

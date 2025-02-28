@@ -1,10 +1,10 @@
 <template>
     <BoxComponent>
-        <div class="tw-flex tw-text-zinc-950 tw-font-bold tw-flex-col tw-w-3/4 tw-pr-2 dark:tw-text-white">
+        <div class="tw-flex tw-text-zinc-950 tw-font-bold tw-flex-col tw-w-full md:tw-w-3/4 tw-pr-2 dark:tw-text-white">
             <!-- Conteúdo da coluna da esquerda -->
             {{tarefa.descricao||'Tarefa sem descrição'}}
         </div>
-        <div class="tw-flex tw-flex-col tw-w-1/2 tw-pl-2">
+        <div class="tw-flex tw-flex-col tw-w-full md:tw-w-1/2 tw-pl-2">
             <!-- Conteúdo da coluna da direita -->
             <CronometroComponent :tempoEmSegundos="tarefa.duracaoEmSegundos" />
         </div>

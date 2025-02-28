@@ -1,6 +1,6 @@
 <template>
     <button
-        class="tw-px-4 tw-py-2 tw-bg-blue-500 tw-text-white tw-rounded tw-transition tw-opacity-100 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+        class="tw-px-4 tw-py-2 tw-bg-blue-500 tw-text-white tw-rounded tw-transition tw-opacity-100 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed sm:tw-px-2 sm:tw-py-1"
         @click="clicado" :disabled="desabilitado">
         <span>{{ texto }}</span>
         <i v-if="icone" :class="['ml-2', icone]"></i>
@@ -15,7 +15,6 @@ export default defineComponent({
     props: {
         desabilitado: {
             type: Boolean,
-
         },
         icone: {
             type: String,
@@ -32,5 +31,4 @@ export default defineComponent({
         }
     }
 });
-
 </script>
